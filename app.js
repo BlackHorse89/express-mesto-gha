@@ -1,9 +1,10 @@
 const express = require('express');
+const mongoose = require('mongoose');
 
 const { PORT = 3000 } = process.env;
 
 const app = express();
 
 app.listen(PORT, () => {
-  console.log(`Подключение к порту ${PORT}`);
+  console.log(`Подключился к порту ${PORT}`);
 })

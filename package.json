@@ -4,7 +4,6 @@
   "description": "[![Tests](../../actions/workflows/tests-13-sprint.yml/badge.svg)](../../actions/workflows/tests-13-sprint.yml) [![Tests](../../actions/workflows/tests-14-sprint.yml/badge.svg)](../../actions/workflows/tests-14-sprint.yml)\r # Проект Mesto фронтенд + бэкенд",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint",
     "dev": "nodemon app.js"
   },
@@ -24,8 +23,10 @@
     "nodemon": "^2.0.20"
   },
   "dependencies": {
+    "body-parser": "^1.20.1",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
-    "express": "^4.18.2"
+    "express": "^4.18.2",
+    "mongoose": "^6.7.5"
   }
 }
