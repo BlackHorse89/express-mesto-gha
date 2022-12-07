@@ -2,7 +2,7 @@ const Card = require('../models/card');
 
 const getCards = async (req, res) => {
   try {
-    const cards = await Card.find({});
+    const cards = await Card.find({}).populate(['owner', 'likes']);
     return res.status(200).json(cards);
   } catch (err) {
     console.error(err);
