@@ -2,29 +2,34 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
 const routerUser = require('./routes/users');
 const routerCard = require('./routes/cards');
+const auth = require('./middlewares/auth');
+const { login, createUser } = require('./controllers/users');
+const serverError = require('./middlewares/serverError');
 
 const { PORT = 3000 } = process.env;
 
 const app = express();
 
-app.use(helmet());
-
-app.use(bodyParser.json());
-
-app.use((req, res, next) => {
-  req.user = {
-    _id: '5d8b8592978f8bd833ca8255',
-  };
-
-  next();
+const limit = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 100,
+  message: 'Привышен лимит запросов.',
 });
 
-app.use('/users', routerUser);
+app.use(helmet());
+app.use(limit);
+app.use(bodyParser.json());
 
+app.post('/signup', createUser);
+app.post('/signin', login);
+app.use(auth);
+app.use('/users', routerUser);
 app.use('/cards', routerCard);
 
+app.use(serverError);
 app.use('*', (req, res) => res.status(404).json({ message: 'Ошибка: роута не существует' }));
 
 app.listen(PORT, () => {
